@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+__pycache__/
+venv/
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Electron
+out/
+
+# Python
+*.pyc
+*.pyo
+.pytest_cache/
