@@ -171,6 +171,7 @@ Frontend will run at `http://localhost:5173`
 
 ## Project Structure
 
+```
 Electron/
 ├── backend/
 │   ├── main.py              # FastAPI app, API routing, and WebSocket server
@@ -183,17 +184,18 @@ Electron/
 └── frontend/
     ├── src/
     │   ├── pages/
-    │   │   ├── Login.jsx    # Login page component
-    │   │   ├── Register.jsx # Registration page component
-    │   │   └── Chat.jsx     # Main chat layout & streaming interface
+    │   │   ├── Login.jsx        # Login page component
+    │   │   ├── Register.jsx     # Registration page component
+    │   │   └── Chat.jsx         # Main chat layout & streaming interface
     │   ├── contexts/
-    │   │   └── AuthContext.jsx # Global user auth state
+    │   │   └── AuthContext.jsx  # Global user auth state
     │   ├── lib/
-    │   │   └── supabase.js  # Supabase client instantiation
-    │   ├── App.jsx          # Route management
-    │   └── main.jsx         # Application root entry point
+    │   │   └── supabase.js      # Supabase client instantiation
+    │   ├── App.jsx              # Route management
+    │   └── main.jsx             # Application root entry point
     ├── package.json
     ├── vite.config.js
     ├── index.html
-    ├── .env.example         # Frontend environment variables template
-    └── .env                 # Frontend active secrets (git-ignored)
+    ├── .env.example              # Frontend environment variables template
+    └── .env                      # Frontend active secrets (git-ignored)
+```
