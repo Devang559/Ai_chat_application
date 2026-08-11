@@ -1,49 +1,40 @@
 # AI Chat Application
 
-A full-stack, real-time AI chat application that lets users sign up, log in, and stream responses from local LLMs powered by Ollama. Built with React and FastAPI, it uses WebSockets for low-latency response streaming and Supabase for secure authentication, database storage, and Row Level Security (RLS).
-
----
+A full-stack chat application where users can sign up, log in, and chat with local LLM models in real-time. The frontend is built with React and the backend with FastAPI, connected via WebSocket for streaming AI responses. Supabase handles authentication and data persistence.
 
 ## Features
 
-- **Authentication:** User registration and login powered by Supabase Auth.
-- **Real-Time Streaming:** WebSocket integration for real-time, token-by-token AI response streaming.
-- **Local AI Inference:** Powered by Ollama running locally (e.g., `llama3.2`).
-- **Data Persistence:** Complete chat history and conversation records stored in Supabase (PostgreSQL).
-- **Responsive Interface:** Modern UI featuring a dynamic sidebar for managing multi-conversation history.
-
----
+- User registration and login with Supabase Auth
+- Real-time chat interface with streaming AI responses
+- Conversation history stored in Supabase
+- WebSocket-based message streaming
+- Responsive UI with sidebar conversation list
 
 ## Tech Stack
 
-### Backend
-- **Framework:** FastAPI
-- **Database & Auth:** Supabase (PostgreSQL + Supabase Auth)
-- **Local LLM Engine:** Ollama
-- **Communication:** WebSockets
+**Backend**
+- FastAPI
+- Supabase (Auth + PostgreSQL)
+- Ollama (local LLM inference)
+- WebSocket streaming
 
-### Frontend
-- **Framework:** React 18
-- **Build Tool:** Vite
-- **Routing:** React Router
-- **Client Libraries:** Supabase JS Client, Fetch API
-
----
+**Frontend**
+- React 18
+- Vite
+- React Router
+- Supabase JS Client
+- Fetch API
 
 ## Prerequisites
 
-Before setting up the project, ensure you have the following installed:
-
-- **Python:** 3.9 or higher
-- **Node.js:** 16 or higher
-- **Ollama:** Downloaded and running locally (`ollama serve`)
-- **Supabase:** An active Supabase project with table schemas configured
-
----
+- Python 3.9+
+- Node.js 16+
+- Ollama installed and running locally (`ollama serve`)
+- A Supabase project with the required tables created
 
 ## Supabase Setup
 
-Navigate to your **Supabase Dashboard** -> **SQL Editor** and execute the following SQL script to create the required tables, Row Level Security (RLS) policies, and service role grants:
+Run the following SQL in your Supabase Dashboard -> SQL Editor to create the required tables:
 
 ```sql
 DROP TABLE IF EXISTS messages CASCADE;
@@ -101,3 +92,108 @@ CREATE POLICY "Users can insert messages in own conversations" ON messages
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON conversations TO service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON messages TO service_role;
+```
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Devang559/Ai_chat_application.git
+cd Ai_chat_application
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file from example
+cp .env.example .env
+# Edit .env and add your Supabase credentials and Ollama settings
+```
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Create .env file from example
+cp .env.example .env
+# Edit .env and add your Supabase credentials
+```
+
+## Running the Application
+
+### Start Ollama
+
+Make sure Ollama is running locally with your desired model:
+
+```bash
+ollama serve
+# In another terminal:
+ollama pull llama3.2
+ollama run llama3.2
+```
+
+### Start Backend
+
+```bash
+cd backend
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Mac/Linux
+uvicorn main:app --reload
+```
+
+Backend will run at `http://localhost:8000`
+
+### Start Frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend will run at `http://localhost:5173`
+
+## Project Structure
+
+Electron/
+├── backend/
+│   ├── main.py              # FastAPI app, API routing, and WebSocket server
+│   ├── auth.py              # Supabase Auth verification helpers
+│   ├── requirements.txt     # Python backend dependencies
+│   ├── supabase_schema.sql  # SQL setup script for Supabase
+│   ├── .env.example         # Backend environment variables template
+│   └── .env                 # Backend active secrets (git-ignored)
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/
+    │   │   ├── Login.jsx    # Login page component
+    │   │   ├── Register.jsx # Registration page component
+    │   │   └── Chat.jsx     # Main chat layout & streaming interface
+    │   ├── contexts/
+    │   │   └── AuthContext.jsx # Global user auth state
+    │   ├── lib/
+    │   │   └── supabase.js  # Supabase client instantiation
+    │   ├── App.jsx          # Route management
+    │   └── main.jsx         # Application root entry point
+    ├── package.json
+    ├── vite.config.js
+    ├── index.html
+    ├── .env.example         # Frontend environment variables template
+    └── .env                 # Frontend active secrets (git-ignored)
